@@ -3,17 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Te Amo ❤️</title>
+<title>Carta para Naomy ❤️</title>
 
 <style>
 body{
     margin:0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(-45deg,#ffccd5,#ff4d6d,#ff8fa3,#ffb3c6);
+    font-family:'Segoe UI', sans-serif;
+    background: linear-gradient(-45deg,#ff4d6d,#ff8fa3,#ffb3c6,#ffccd5);
     background-size:400% 400%;
-    animation: gradientMove 12s ease infinite;
+    animation: gradientMove 10s ease infinite;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
     text-align:center;
     color:white;
+    overflow:hidden;
 }
 
 @keyframes gradientMove{
@@ -24,39 +29,24 @@ body{
 
 .container{
     max-width:430px;
-    margin:auto;
+    width:100%;
     padding:20px;
 }
 
-h1{
-    margin-top:40px;
-    font-size:28px;
-}
-
-img{
-    width:100%;
-    border-radius:20px;
-    margin:20px 0;
-    box-shadow:0 10px 25px rgba(0,0,0,0.3);
-}
-
-/* BOTONES */
-.button{
-    width:100%;
-    padding:15px;
-    margin-top:20px;
+button{
+    padding:15px 25px;
     border:none;
     border-radius:30px;
     font-size:18px;
+    font-weight:bold;
     background:white;
     color:#ff4d6d;
-    font-weight:bold;
     cursor:pointer;
     box-shadow:0 10px 25px rgba(0,0,0,0.3);
     transition:0.3s;
 }
 
-.button:hover{
+button:hover{
     transform:scale(1.05);
 }
 
@@ -92,7 +82,7 @@ img{
     left:5%;
     padding:20px;
     box-sizing:border-box;
-    overflow:auto;
+    overflow:hidden;
     opacity:0;
     transition: opacity 1s ease 0.8s;
 }
@@ -111,27 +101,12 @@ img{
 
 <div class="container">
 
-<h1>Sabía que dirías que sí 😌❤️</h1>
-
-<p>Eres la mujer más hermosa del mundo, Naomy.</p>
-
-<!-- Foto chistosa -->
-<img src="imgs/naomy3.jpeg">
-
-<p>Gracias por hacer mi vida más feliz 💘</p>
-
-<button class="button" onclick="openLetter()">
-    Lee algo importante 💌
-</button>
+<button onclick="openLetter()">Lee algo importante 💌</button>
 
 <div class="envelope" id="envelope">
     <div class="flap"></div>
     <div class="letter" id="letterText"></div>
 </div>
-
-<button class="button" onclick="location.href='index.html'">
-    Volver al inicio 💞
-</button>
 
 </div>
 
@@ -150,12 +125,11 @@ solo con su presencia.
 No eres solo mi San Valentín…
 eres mi negra favorita.
 
-Gracias por existir ❤️`;
+Gracias por existir, te amo hermosa ❤️`;
 
 function openLetter(){
     const envelope = document.getElementById("envelope");
     envelope.style.display = "block";
-
     setTimeout(()=>{
         envelope.classList.add("show");
         typeWriter();
@@ -164,7 +138,6 @@ function openLetter(){
 
 function typeWriter(){
     const textElement = document.getElementById("letterText");
-    textElement.innerHTML = "";
     let i = 0;
 
     function typing(){

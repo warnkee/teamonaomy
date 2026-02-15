@@ -15,22 +15,44 @@ body{
     overflow:hidden;
 }
 
-/* Contenedor centrado estilo iPhone */
+/* Pantalla de cuenta regresiva */
+#intro{
+    position:fixed;
+    width:100%;
+    height:100vh;
+    background:linear-gradient(180deg,#590d22,#800f2f);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:10;
+    transition:opacity 0.8s ease;
+}
+
+#intro h2{
+    font-size:22px;
+    margin-bottom:20px;
+}
+
+#countdown{
+    font-size:70px;
+    font-weight:bold;
+}
+
+/* Contenido principal oculto al inicio */
 .container{
     max-width:430px;
     margin:auto;
     padding:20px;
     position:relative;
     height:100vh;
+    opacity:0;
+    transition:opacity 1s ease;
 }
 
 h1{
     margin-top:40px;
     font-size:24px;
-}
-
-h2{
-    margin-top:10px;
 }
 
 img{
@@ -40,7 +62,6 @@ img{
     box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
 
-/* Botones */
 .button{
     padding:15px 25px;
     border:none;
@@ -52,7 +73,6 @@ img{
     transition: all 0.2s ease;
 }
 
-/* Botón SI */
 #yesBtn{
     background:white;
     color:#ff4d6d;
@@ -62,7 +82,6 @@ img{
     box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
 
-/* Botón NO (escapista) */
 #noBtn{
     background:#c9184a;
     color:white;
@@ -71,37 +90,22 @@ img{
     transform:translate(-50%, -50%);
     box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
-
-/* Corazones flotando */
-.heart{
-    position:absolute;
-    color:white;
-    font-size:20px;
-    animation: floatUp 6s linear infinite;
-    opacity:0.7;
-}
-
-@keyframes floatUp{
-    0%{
-        transform:translateY(100vh);
-        opacity:0;
-    }
-    20%{opacity:1;}
-    100%{
-        transform:translateY(-10vh);
-        opacity:0;
-    }
-}
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<!-- Intro dramática -->
+<div id="intro">
+    <h2>Preparando pregunta importante…</h2>
+    <div id="countdown">3</div>
+</div>
+
+<!-- Contenido principal -->
+<div class="container" id="mainContent">
 
 <h1>Y ahora la pregunta seria 😏</h1>
 
-<!-- Cambia esta imagen -->
 <img src="imgs/naomy4.jpeg">
 
 <h2>¿Y me darás el chiquito? 😳</h2>
@@ -117,13 +121,31 @@ img{
 </div>
 
 <script>
+/* CUENTA REGRESIVA */
+let count = 3;
+const countdownElement = document.getElementById("countdown");
+const intro = document.getElementById("intro");
+const mainContent = document.getElementById("mainContent");
+
+const interval = setInterval(() => {
+    count--;
+    if(count > 0){
+        countdownElement.textContent = count;
+    } else {
+        clearInterval(interval);
+        intro.style.opacity = "0";
+        setTimeout(()=>{
+            intro.style.display = "none";
+            mainContent.style.opacity = "1";
+        },800);
+    }
+},1000);
+
+/* BOTÓN ESCAPISTA */
 const noBtn = document.getElementById("noBtn");
 const container = document.querySelector(".container");
 
-/* Movimiento en PC */
 noBtn.addEventListener("mouseenter", moveButton);
-
-/* Movimiento en iPhone */
 noBtn.addEventListener("touchstart", moveButton);
 
 function moveButton(){
@@ -140,24 +162,6 @@ function moveButton(){
     noBtn.style.left = randomX + "px";
     noBtn.style.top = randomY + "px";
 }
-
-/* Generador de corazones */
-function createHeart(){
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML = "❤️";
-
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
-
-    document.body.appendChild(heart);
-
-    setTimeout(()=>{
-        heart.remove();
-    },6000);
-}
-
-setInterval(createHeart, 500);
 </script>
 
 </body>

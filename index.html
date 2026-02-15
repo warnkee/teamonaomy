@@ -12,8 +12,15 @@ body{
     background: linear-gradient(180deg,#ff4d6d,#ff8fa3);
     text-align:center;
     color:white;
+      background: linear-gradient(-45deg,#ff4d6d,#ff8fa3,#ffb3c6,#ffccd5);
+  background-size: 400% 400%;
+  animation: gradientMove 10s ease infinite;
 }
-
+@keyframes gradientMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
 .container{
     max-width:430px;
     margin:auto;
