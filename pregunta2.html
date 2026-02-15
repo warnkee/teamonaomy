@@ -8,51 +8,35 @@
 <style>
 body{
     margin:0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family:'Segoe UI', sans-serif;
     background: linear-gradient(180deg,#ff4d6d,#ff8fa3);
     text-align:center;
     color:white;
     overflow:hidden;
 }
 
-/* Pantalla de cuenta regresiva */
-#intro{
-    position:fixed;
-    width:100%;
-    height:100vh;
-    background:linear-gradient(180deg,#590d22,#800f2f);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    z-index:10;
-    transition:opacity 0.8s ease;
-}
-
-#intro h2{
-    font-size:22px;
-    margin-bottom:20px;
-}
-
-#countdown{
-    font-size:70px;
-    font-weight:bold;
-}
-
-/* Contenido principal oculto al inicio */
 .container{
     max-width:430px;
     margin:auto;
     padding:20px;
     position:relative;
     height:100vh;
-    opacity:0;
-    transition:opacity 1s ease;
+}
+
+/* Mensaje dinámico */
+.statusMessage{
+    margin-top:15px;
+    font-size:18px;
+    font-weight:bold;
+    background:rgba(255,255,255,0.2);
+    padding:10px;
+    border-radius:20px;
+    backdrop-filter:blur(10px);
+    transition:0.3s;
 }
 
 h1{
-    margin-top:40px;
-    font-size:24px;
+    margin-top:20px;
 }
 
 img{
@@ -95,14 +79,11 @@ img{
 
 <body>
 
-<!-- Intro dramática -->
-<div id="intro">
-    <h2>Preparando pregunta importante…</h2>
-    <div id="countdown">3</div>
-</div>
+<div class="container">
 
-<!-- Contenido principal -->
-<div class="container" id="mainContent">
+<div class="statusMessage" id="status">
+<span id="attempts"></span> 
+</div>
 
 <h1>Y ahora la pregunta seria 😏</h1>
 
@@ -121,43 +102,79 @@ img{
 </div>
 
 <script>
-/* CUENTA REGRESIVA */
-let count = 3;
-const countdownElement = document.getElementById("countdown");
-const intro = document.getElementById("intro");
-const mainContent = document.getElementById("mainContent");
-
-const interval = setInterval(() => {
-    count--;
-    if(count > 0){
-        countdownElement.textContent = count;
-    } else {
-        clearInterval(interval);
-        intro.style.opacity = "0";
-        setTimeout(()=>{
-            intro.style.display = "none";
-            mainContent.style.opacity = "1";
-        },800);
-    }
-},1000);
-
-/* BOTÓN ESCAPISTA */
 const noBtn = document.getElementById("noBtn");
 const container = document.querySelector(".container");
+const attemptsSpan = document.getElementById("attempts");
+const status = document.getElementById("status");
 
-noBtn.addEventListener("mouseenter", moveButton);
-noBtn.addEventListener("touchstart", moveButton);
+let attempts = 0;
+
+/* Movimiento en PC */
+noBtn.addEventListener("mouseenter", handleNoAttempt);
+
+/* Movimiento en iPhone */
+noBtn.addEventListener("touchstart", handleNoAttempt);
+
+function handleNoAttempt(){
+    attempts++;
+    attemptsSpan.textContent = attempts;
+
+    /* Cambiar mensaje psicológico */
+if (attempts > 33) {
+    status.innerHTML = "Sabe que le quito el boton por necia ahora solo tiene una opcion 😌";
+
+    noBtn.style.opacity = "0";
+    noBtn.style.transform = "translate(-50%, -50%) scale(0)";
+
+    setTimeout(() => {
+        noBtn.style.display = "none";
+    }, 3000);
+}
+else if (attempts > 28) {
+    status.innerHTML = "amor ya no voy a poner mas mensajes";
+}
+else if (attempts > 26) {
+    status.innerHTML = "voy a dormir legal si sigue";
+}
+else if (attempts > 22) {
+    status.innerHTML = "me avisa cuando se aburra";
+}
+else if (attempts > 17) {
+    status.innerHTML = "Va seguiiir? solo toque que SI";
+}
+else if (attempts > 12) {
+    status.innerHTML = "Me esta dando pena ajena amor";
+}
+else if (attempts > 7) {
+    status.innerHTML = "Sabe que yo controlo todo verdad?";
+}
+else if (attempts > 4) {
+    status.innerHTML = "Que te dije?";
+}
+else if (attempts > 1) {
+    status.innerHTML = "Amor… no siga";
+}
+
+
+    moveButton();
+}
 
 function moveButton(){
 
     const containerRect = container.getBoundingClientRect();
     const btnRect = noBtn.getBoundingClientRect();
 
-    const maxX = containerRect.width - btnRect.width;
-    const maxY = containerRect.height - btnRect.height;
+    /* Margen de seguridad para que NO toque los bordes */
+    const padding = 40;
 
-    const randomX = Math.random() * maxX;
-    const randomY = Math.random() * maxY;
+    const maxX = containerRect.width - btnRect.width - padding;
+    const maxY = containerRect.height - btnRect.height - padding;
+
+    const minX = padding;
+    const minY = containerRect.height * 0.4; // evita que suba demasiado
+
+    const randomX = Math.random() * (maxX - minX) + minX;
+    const randomY = Math.random() * (maxY - minY) + minY;
 
     noBtn.style.left = randomX + "px";
     noBtn.style.top = randomY + "px";
