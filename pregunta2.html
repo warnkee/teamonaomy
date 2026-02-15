@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pregunta importante 😏</title>
+
+<style>
+body{
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(180deg,#ff4d6d,#ff8fa3);
+    text-align:center;
+    color:white;
+    overflow:hidden;
+}
+
+/* Contenedor centrado estilo iPhone */
+.container{
+    max-width:430px;
+    margin:auto;
+    padding:20px;
+    position:relative;
+    height:100vh;
+}
+
+h1{
+    margin-top:40px;
+    font-size:24px;
+}
+
+h2{
+    margin-top:10px;
+}
+
+img{
+    width:100%;
+    border-radius:20px;
+    margin:20px 0;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* Botones */
+.button{
+    padding:15px 25px;
+    border:none;
+    border-radius:30px;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    position:absolute;
+    transition: all 0.2s ease;
+}
+
+/* Botón SI */
+#yesBtn{
+    background:white;
+    color:#ff4d6d;
+    left:50%;
+    transform:translateX(-50%);
+    bottom:130px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Botón NO (escapista) */
+#noBtn{
+    background:#c9184a;
+    color:white;
+    top:75%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Corazones flotando */
+.heart{
+    position:absolute;
+    color:white;
+    font-size:20px;
+    animation: floatUp 6s linear infinite;
+    opacity:0.7;
+}
+
+@keyframes floatUp{
+    0%{
+        transform:translateY(100vh);
+        opacity:0;
+    }
+    20%{opacity:1;}
+    100%{
+        transform:translateY(-10vh);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Y ahora la pregunta seria 😏</h1>
+
+<!-- Cambia esta imagen -->
+<img src="foto4.jpg">
+
+<h2>¿Y me darás el chiquito? 😳</h2>
+
+<button id="yesBtn" class="button" onclick="location.href='final.html'">
+    Sí 😈
+</button>
+
+<button id="noBtn" class="button">
+    No 🙈
+</button>
+
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const container = document.querySelector(".container");
+
+/* Movimiento en PC */
+noBtn.addEventListener("mouseenter", moveButton);
+
+/* Movimiento en iPhone */
+noBtn.addEventListener("touchstart", moveButton);
+
+function moveButton(){
+
+    const containerRect = container.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+
+    const maxX = containerRect.width - btnRect.width;
+    const maxY = containerRect.height - btnRect.height;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+}
+
+/* Generador de corazones */
+function createHeart(){
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{
+        heart.remove();
+    },6000);
+}
+
+setInterval(createHeart, 500);
+</script>
+
+</body>
+</html>
