@@ -164,14 +164,15 @@ function moveButton(){
     const containerRect = container.getBoundingClientRect();
     const btnRect = noBtn.getBoundingClientRect();
 
-    /* Margen de seguridad para que NO toque los bordes */
     const padding = 40;
 
     const maxX = containerRect.width - btnRect.width - padding;
-    const maxY = containerRect.height - btnRect.height - padding;
-
     const minX = padding;
-    const minY = containerRect.height * 0.4; // evita que suba demasiado
+
+    // NUEVO límite vertical
+    const initialY = containerRect.height * 0.75 - (btnRect.height / 2);
+    const minY = 0;
+    const maxY = initialY;
 
     const randomX = Math.random() * (maxX - minX) + minX;
     const randomY = Math.random() * (maxY - minY) + minY;
@@ -179,6 +180,7 @@ function moveButton(){
     noBtn.style.left = randomX + "px";
     noBtn.style.top = randomY + "px";
 }
+
 </script>
 
 </body>
